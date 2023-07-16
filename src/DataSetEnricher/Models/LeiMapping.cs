@@ -1,6 +1,6 @@
 ﻿namespace CardanoAssignment.Models;
 
-public class LeiRecord
+public class LeiMapping
 {
     public Links Links { get; set; }
     public Data[] Data { get; set; }

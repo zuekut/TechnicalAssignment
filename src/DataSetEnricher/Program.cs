@@ -1,3 +1,4 @@
+using CardanoAssignment.Convertors;
 using CardanoAssignment.Extensions;
 using CardanoAssignment.Models;
 using CardanoAssignment.Repositories;
@@ -14,6 +15,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddGleiHttpClient(gleiApiConfiguration);
+builder.Services.AddScoped<ICsvToDataModelConvertor, CsvToDataModelConvertor>();
 builder.Services.AddScoped<IGleifRepository, GleifRepository>();
 var app = builder.Build();
 

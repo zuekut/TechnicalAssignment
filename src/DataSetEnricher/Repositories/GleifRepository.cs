@@ -12,9 +12,9 @@ public class GleifRepository : IGleifRepository
         _gleiClient = clientFactory.CreateClient("Glei");
 
     }
-    public async Task<LeiRecord> GetLeiRecordByLeiNumber(string lei)
+    public async Task<LeiMapping> GetLeiRecordByLeiNumber(string lei)
     {
-        var leiRecordByLeiNumber = await _gleiClient.GetFromJsonAsync<LeiRecord>($"api/v1/lei-records?filter[lei]={lei}");
+        var leiRecordByLeiNumber = await _gleiClient.GetFromJsonAsync<LeiMapping>($"api/v1/lei-records?filter[lei]={lei}");
         return leiRecordByLeiNumber ?? throw new LeiRecordNotExistException(lei);
     }
 }

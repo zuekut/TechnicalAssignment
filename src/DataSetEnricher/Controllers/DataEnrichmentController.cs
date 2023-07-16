@@ -1,21 +1,24 @@
-﻿using CardanoAssignment.Models;
-using CardanoAssignment.Repositories;
+﻿using CardanoAssignment.Convertors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CardanoAssignment.Controllers;
 
 public class DataEnrichmentController : Controller
 {
-    private readonly IGleifRepository _gleifRepository;
+    private readonly ICsvToDataModelConvertor _csvToDataModelConvertor;
 
-    public DataEnrichmentController(IGleifRepository gleifRepository)
+    public DataEnrichmentController(ICsvToDataModelConvertor csvToDataModelConvertor)
     {
-        _gleifRepository = gleifRepository;
+        _csvToDataModelConvertor = csvToDataModelConvertor;
     }
 
-    [HttpPost]
-    public IActionResult EnrichLeiDataSet([FromForm] LeiInputDataSet dataSet)
+    [HttpPost("enrichData")]
+    public IActionResult EnrichLeiDataSet(IFormFile file)
     {
+        if (file is not { Length: > 0 }) return BadRequest("No file was uploaded.");
+        var csvDataSet = _csvToDataModelConvertor.ConvertCsv(file.OpenReadStream());
+
         return Ok();
+
     }
 }
