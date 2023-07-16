@@ -27,6 +27,7 @@ public sealed class InputDataSetMap : ClassMap<LeiRecord>
         Map(m => m.Notional).Name("notional");
         Map(m => m.NotionalCurrency).Name("notional_currency");
         Map(m => m.TransactionType).Name("transaction_type");
+        //ToDo Fix DateTime format to be like input_dataset
         Map(m => m.TransactionDateTime).Name("transaction_datetime");
         Map(m => m.Rate).Name("rate");
         Map(m => m.Lei).Name("lei");
