@@ -4,5 +4,5 @@ namespace CardanoAssignment.Convertors;
 
 public interface ICsvToDataModelConvertor
 {
-    List<CsvDataSet> ConvertCsv(Stream csvStream);
+    List<LeiRecord> ConvertCsv(Stream csvStream);
 }

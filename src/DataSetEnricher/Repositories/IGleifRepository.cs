@@ -4,5 +4,5 @@ namespace CardanoAssignment.Repositories;
 
 public interface IGleifRepository
 {
-    public Task<LeiMapping> GetLeiRecordByLeiNumber(string lei);
+    public Task<GleifRecord?> GetLeiRecordByLeiNumber(string lei);
 }

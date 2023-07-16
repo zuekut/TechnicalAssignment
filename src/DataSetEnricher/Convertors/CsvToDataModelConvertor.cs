@@ -7,7 +7,7 @@ namespace CardanoAssignment.Convertors;
 
 public class CsvToDataModelConvertor : ICsvToDataModelConvertor
 {
-    public List<CsvDataSet> ConvertCsv(Stream csvStream)
+    public List<LeiRecord> ConvertCsv(Stream csvStream)
     {
         using (var reader = new StreamReader(csvStream))
         {
@@ -19,7 +19,7 @@ public class CsvToDataModelConvertor : ICsvToDataModelConvertor
             using (var csv = new CsvReader(reader, csvConfig))
             {
                 csv.Context.RegisterClassMap<CsvDataSetMap>();
-                return csv.GetRecords<CsvDataSet>().ToList();
+                return csv.GetRecords<LeiRecord>().ToList();
             }
         }
     }

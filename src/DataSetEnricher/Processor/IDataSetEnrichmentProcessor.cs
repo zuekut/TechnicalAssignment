@@ -4,5 +4,5 @@ namespace CardanoAssignment.Processor;
 
 public interface IDataSetEnrichmentProcessor
 {
-    string ProcessDataSet(List<CsvDataSet> csvDataSet);
+    string ProcessDataSet(List<LeiRecord> csvDataSet);
 }

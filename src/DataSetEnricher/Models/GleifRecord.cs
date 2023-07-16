@@ -1,15 +1,8 @@
 ﻿namespace CardanoAssignment.Models;
 
-public class LeiMapping
+public class GleifRecord
 {
-    public Links Links { get; set; }
     public Data[] Data { get; set; }
-}
-
-public class Links
-{
-    public string First { get; set; }
-    public string Last { get; set; }
 }
 
 public class Data

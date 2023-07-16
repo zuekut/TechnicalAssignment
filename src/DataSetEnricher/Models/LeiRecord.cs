@@ -2,7 +2,7 @@
 
 namespace CardanoAssignment.Models;
 
-public class CsvDataSet
+public class LeiRecord
 {
     public string TransactionUti { get; set; }
     public string Isin { get; set; }
@@ -10,14 +10,17 @@ public class CsvDataSet
     public string NotionalCurrency { get; set; }
     public string TransactionType { get; set; }
     public DateTime TransactionDateTime { get; set; }
-    public decimal Rate { get; set; }
+    public double Rate { get; set; }
     public string Lei { get; set; }
+    public GleifRecord? GleifRecord { get; set; } 
+    public Dictionary<string, object> AdditionalEnrichedData { get; set; }
 }
 
-public sealed class CsvDataSetMap : ClassMap<CsvDataSet>
+public sealed class CsvDataSetMap : ClassMap<LeiRecord>
 {
     public CsvDataSetMap()
     {
+        //ToDo map gleifrecord legalName and bic
         Map(m => m.TransactionUti).Name("transaction_uti");
         Map(m => m.Isin).Name("isin");
         Map(m => m.Notional).Name("notional");
