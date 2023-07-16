@@ -12,15 +12,16 @@ public class LeiRecord
     public DateTime TransactionDateTime { get; set; }
     public double Rate { get; set; }
     public string Lei { get; set; }
-    public GleifRecord? GleifRecord { get; set; } 
-    public Dictionary<string, object> AdditionalEnrichedData { get; set; }
+    public string LegalName { get; set; }
+    public string Bic { get; set; }
+    public double TransactionCost { get; set; }
+    public GleifRecord? GleifRecord { get; set; }
 }
 
-public sealed class CsvDataSetMap : ClassMap<LeiRecord>
+public sealed class InputDataSetMap : ClassMap<LeiRecord>
 {
-    public CsvDataSetMap()
+    public InputDataSetMap()
     {
-        //ToDo map gleifrecord legalName and bic
         Map(m => m.TransactionUti).Name("transaction_uti");
         Map(m => m.Isin).Name("isin");
         Map(m => m.Notional).Name("notional");
@@ -29,5 +30,8 @@ public sealed class CsvDataSetMap : ClassMap<LeiRecord>
         Map(m => m.TransactionDateTime).Name("transaction_datetime");
         Map(m => m.Rate).Name("rate");
         Map(m => m.Lei).Name("lei");
+        Map(m => m.LegalName).Name("legalName").Optional();
+        Map(m => m.Bic).Name("bic").Optional();
+        Map(m => m.TransactionCost).Name("transaction_cost").Optional();
     }
 }

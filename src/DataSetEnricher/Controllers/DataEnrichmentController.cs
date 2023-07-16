@@ -6,12 +6,12 @@ namespace CardanoAssignment.Controllers;
 
 public class DataEnrichmentController : Controller
 {
-    private readonly ICsvToDataModelConvertor _csvToDataModelConvertor;
+    private readonly ICsvConvertor _csvConvertor;
     private readonly IDataSetEnrichmentProcessor _dataSetEnrichmentProcessor;
 
-    public DataEnrichmentController(ICsvToDataModelConvertor csvToDataModelConvertor, IDataSetEnrichmentProcessor dataSetEnrichmentProcessor)
+    public DataEnrichmentController(ICsvConvertor csvConvertor, IDataSetEnrichmentProcessor dataSetEnrichmentProcessor)
     {
-        _csvToDataModelConvertor = csvToDataModelConvertor;
+        _csvConvertor = csvConvertor;
         _dataSetEnrichmentProcessor = dataSetEnrichmentProcessor;
     }
 
@@ -19,7 +19,7 @@ public class DataEnrichmentController : Controller
     public IActionResult EnrichLeiDataSet(IFormFile file)
     {
         if (file is not { Length: > 0 }) return BadRequest("No file was uploaded.");
-        var csvDataSet = _csvToDataModelConvertor.ConvertCsv(file.OpenReadStream());
+        var csvDataSet = _csvConvertor.ConvertFromCsv(file.OpenReadStream());
         var enrichedCsv = _dataSetEnrichmentProcessor.ProcessDataSet(csvDataSet);
 
         Response.Headers.Add("Content-Disposition", "attachment; filename=extended.csv");

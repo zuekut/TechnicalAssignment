@@ -1,3 +1,4 @@
+using CardanoAssignment.Convertors;
 using CardanoAssignment.Enrichments;
 using CardanoAssignment.Models;
 using CardanoAssignment.Repositories;
@@ -7,10 +8,12 @@ namespace CardanoAssignment.Processor;
 public class DataSetEnrichmentProcessor : IDataSetEnrichmentProcessor
 {
     private readonly IGleifRepository _gleifRepository;
+    private readonly ICsvConvertor _csvConvertor;
 
-    public DataSetEnrichmentProcessor(IGleifRepository gleifRepository)
+    public DataSetEnrichmentProcessor(IGleifRepository gleifRepository, ICsvConvertor csvConvertor)
     {
         _gleifRepository = gleifRepository;
+        _csvConvertor = csvConvertor;
     }
     public string ProcessDataSet(List<LeiRecord> csvDataSet)
     {
@@ -19,7 +22,7 @@ public class DataSetEnrichmentProcessor : IDataSetEnrichmentProcessor
             .WithDecorator(leiData => new GleifExtensionDecorator(leiData, _gleifRepository))
             .WithDecorator(leiData => new LeiTransactionCostCalculationDecorator(leiData, _gleifRepository))
             .Build();
-        IEnumerable<LeiRecord> enrichedData = enrichedDataBuilder.GetData();
-        //ToDO Convert enriched Records to a CSV file.
+        List<LeiRecord> enrichedData = enrichedDataBuilder.GetData();
+        return _csvConvertor.ConvertToCsv(enrichedData);
     }
 }

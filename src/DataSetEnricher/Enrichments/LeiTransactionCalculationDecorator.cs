@@ -12,24 +12,24 @@ public class LeiTransactionCostCalculationDecorator : LeiDataDecorator
         _gleifRepository = gleifRepository;
     }
 
-    public override IEnumerable<LeiRecord> GetData()
+    public override List<LeiRecord> GetData()
     {
+        List<LeiRecord> leiRecords = new List<LeiRecord>();
         foreach (var leiRecord in _decoratedData.GetData())
         {
             leiRecord.GleifRecord ??= _gleifRepository.GetLeiRecordByLeiNumber(leiRecord.Lei).Result;
 
             var gleifData = leiRecord.GleifRecord?.Data.FirstOrDefault();
-            switch (gleifData?.Attributes.Entity.LegalAddress.Country)
+            leiRecord.TransactionCost = gleifData?.Attributes.Entity.LegalAddress.Country switch
             {
-                case "GB":
-                    leiRecord.AdditionalEnrichedData.Add("transaction_costs", (leiRecord.Notional * leiRecord.Rate - leiRecord.Notional) / 2);
-                    break;
-                case "NL":
-                    leiRecord.AdditionalEnrichedData.Add("transaction_costs", (leiRecord.Notional * leiRecord.Rate - leiRecord.Notional) / 2 + 1 / leiRecord.Rate);
-                    break;
-            }
+                "GB" => (leiRecord.Notional * leiRecord.Rate) / 2,
+                "NL" => (leiRecord.Notional * leiRecord.Rate) / 2 + 1 / leiRecord.Rate,
+                _ => leiRecord.TransactionCost
+            };
 
-            yield return leiRecord;
+            leiRecords.Add(leiRecord);
         }
+
+        return leiRecords;
     }
 }

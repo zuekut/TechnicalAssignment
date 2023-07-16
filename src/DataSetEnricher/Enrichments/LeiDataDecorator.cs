@@ -10,5 +10,5 @@ public abstract class LeiDataDecorator : ILeiData
     {
         _decoratedData = decoratedData;
     }
-    public abstract IEnumerable<LeiRecord> GetData();
+    public abstract List<LeiRecord> GetData();
 }

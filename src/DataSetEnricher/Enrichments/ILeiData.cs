@@ -4,5 +4,5 @@ namespace CardanoAssignment.Enrichments;
 
 public interface ILeiData
 {
-    IEnumerable<LeiRecord> GetData();
+    List<LeiRecord> GetData();
 }

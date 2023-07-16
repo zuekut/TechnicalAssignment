@@ -12,13 +12,18 @@ public class GleifExtensionDecorator : LeiDataDecorator
         _gleifRepository = gleifRepository;
     }
 
-    public override IEnumerable<LeiRecord> GetData()
+    public override List<LeiRecord> GetData()
     {
+        List<LeiRecord> leiRecords = new List<LeiRecord>();
         foreach (var leiRecord in _decoratedData.GetData())
         {
             var externalLeiRecord = _gleifRepository.GetLeiRecordByLeiNumber(leiRecord.Lei).Result;
             leiRecord.GleifRecord = externalLeiRecord;
-            yield return leiRecord;
+            leiRecord.LegalName = externalLeiRecord.Data.FirstOrDefault().Attributes.Entity.LegalName.Name;
+            leiRecord.Bic = externalLeiRecord.Data.FirstOrDefault().Attributes.Bic.FirstOrDefault();
+            leiRecords.Add(leiRecord);
         }
+
+        return leiRecords;
     }
 }

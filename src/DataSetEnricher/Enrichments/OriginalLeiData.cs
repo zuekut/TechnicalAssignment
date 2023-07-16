@@ -4,13 +4,13 @@ namespace CardanoAssignment.Enrichments;
 
 public class OriginalLeiData : ILeiData
 {
-    private readonly IEnumerable<LeiRecord> _leiRecords;
+    private readonly List<LeiRecord> _leiRecords;
 
-    public OriginalLeiData(IEnumerable<LeiRecord> leiRecords)
+    public OriginalLeiData(List<LeiRecord> leiRecords)
     {
         _leiRecords = leiRecords;
     }
-    public IEnumerable<LeiRecord> GetData()
+    public List<LeiRecord> GetData()
     {
         return _leiRecords;
     }
