@@ -66,7 +66,7 @@ public class CsvConvertorTests
         var csvOutput = _csvConvertor.ConvertToCsv(leiRecords);
         //Assert
         Check.That(csvOutput).IsNotEmpty();
-        Check.That(csvOutput).IsEqualTo("transaction_uti,isin,notional,notional_currency,transaction_type,transaction_datetime,rate,lei,legalName,bic,transaction_cost,1030291281MARKITWIRE0000000000000112874138,EZ9724VTXK48,763000,GBP,Sell,11/25/2020 16:06:22,0.0070956,XKZZ2JZF41MRHTR1V493,,,0\r\n");
+        Check.That(csvOutput).IsEqualTo("transaction_uti,isin,notional,notional_currency,transaction_type,transaction_datetime,rate,lei,legalName,bic,transaction_cost\r\n1030291281MARKITWIRE0000000000000112874138,EZ9724VTXK48,763000,GBP,Sell,2020-11-25T16:06:22Z,0.0070956,XKZZ2JZF41MRHTR1V493,,,0\r\n");
     }
     
     private Stream CreateCsvStreamMock()
