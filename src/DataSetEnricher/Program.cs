@@ -1,4 +1,5 @@
 using CardanoAssignment.Convertors;
+using CardanoAssignment.Enrichments;
 using CardanoAssignment.Extensions;
 using CardanoAssignment.Models;
 using CardanoAssignment.Processors;
@@ -29,6 +30,7 @@ builder.Services.AddSingleton<ICsvReaderFactory, CsvReaderFactory>();
 builder.Services.AddSingleton<ICsvWriterFactory, CsvWriterFactory>();
 builder.Services.AddScoped<ICsvConvertor, CsvConvertor>();
 builder.Services.AddScoped<IGleifRepository, GleifRepository>();
+builder.Services.AddScoped<ILeiDataEnrichmentHandler, LeiDataEnrichmentHandler>();
 builder.Services.AddScoped<IDataSetEnrichmentProcessor, DataSetEnrichmentProcessor>();
 var app = builder.Build();
 

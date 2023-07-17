@@ -2,37 +2,31 @@ using CardanoAssignment.Convertors;
 using CardanoAssignment.Enrichments;
 using CardanoAssignment.Exceptions;
 using CardanoAssignment.Models;
-using CardanoAssignment.Repositories;
 
 namespace CardanoAssignment.Processors;
 
 public class DataSetEnrichmentProcessor : IDataSetEnrichmentProcessor
 {
     private readonly ILogger<DataSetEnrichmentProcessor> _logger;
-    private readonly IGleifRepository _gleifRepository;
+    private readonly ILeiDataEnrichmentHandler _leiDataEnrichmentHandler;
     private readonly ICsvConvertor _csvConvertor;
 
-    public DataSetEnrichmentProcessor(ILogger<DataSetEnrichmentProcessor> logger, IGleifRepository gleifRepository, ICsvConvertor csvConvertor)
+    public DataSetEnrichmentProcessor(ILogger<DataSetEnrichmentProcessor> logger, ILeiDataEnrichmentHandler leiDataEnrichmentHandler, ICsvConvertor csvConvertor)
     {
         _logger = logger;
-        _gleifRepository = gleifRepository;
+        _leiDataEnrichmentHandler = leiDataEnrichmentHandler;
         _csvConvertor = csvConvertor;
     }
     public string ProcessDataSet(List<LeiRecord> csvDataSet)
     {
         try
         {
-            ILeiData originalData = new OriginalLeiData(csvDataSet);
-            var enrichedDataBuilder = new LeiDecoratorBuilder(originalData)
-                .WithDecorator(leiData => new GleifExtensionDecorator(leiData, _gleifRepository))
-                .WithDecorator(leiData => new LeiTransactionCostCalculationDecorator(leiData, _gleifRepository))
-                .Build();
-            List<LeiRecord> enrichedData = enrichedDataBuilder.GetData();
+            List<LeiRecord> enrichedData = _leiDataEnrichmentHandler.EnrichData(csvDataSet);
             return _csvConvertor.ConvertToCsv(enrichedData);
         }
-        catch (GleifApiException gleifApiException)
+        catch (LeiDataEnrichmentException leiDataEnrichmentException)
         {
-            _logger.LogError(gleifApiException, gleifApiException.Message);
+            _logger.LogError(leiDataEnrichmentException, leiDataEnrichmentException.Message);
             throw;
         }
         catch (CsvConversionException csvConversionException)
