@@ -1,6 +1,6 @@
 using CardanoAssignment.Models;
 
-namespace CardanoAssignment.Processor;
+namespace CardanoAssignment.Processors;
 
 public interface IDataSetEnrichmentProcessor
 {

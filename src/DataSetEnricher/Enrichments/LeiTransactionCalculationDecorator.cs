@@ -20,10 +20,10 @@ public class LeiTransactionCostCalculationDecorator : LeiDataDecorator
             leiRecord.GleifRecord ??= _gleifRepository.GetLeiRecordByLeiNumber(leiRecord.Lei).Result;
 
             var gleifData = leiRecord.GleifRecord?.Data.FirstOrDefault();
-            leiRecord.TransactionCost = gleifData?.Attributes.Entity.LegalAddress.Country switch
+            leiRecord.TransactionCost = gleifData?.Attributes?.Entity?.LegalAddress?.Country switch
             {
-                "GB" => (leiRecord.Notional * leiRecord.Rate) / 2,
-                "NL" => (leiRecord.Notional * leiRecord.Rate) / 2 + 1 / leiRecord.Rate,
+                "GB" => (leiRecord.Notional * leiRecord.Rate - leiRecord.Notional) / 2,
+                "NL" => (leiRecord.Notional * leiRecord.Rate - leiRecord.Notional) / 2 + 1 / leiRecord.Rate,
                 _ => leiRecord.TransactionCost
             };
 

@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataSetEnricher", "src\DataSetEnricher\DataSetEnricher.csproj", "{8C4514BA-3956-4250-BC6F-8435A8E59C3D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataSetEnricher.Tests", "test\DataSetEnricher.Tests\DataSetEnricher.Tests.csproj", "{3288AEBE-4842-4DF4-94B8-096FD66D823E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataSetEnricher.Tests", "test\DataSetEnricher.Tests\DataSetEnricher.Tests.csproj", "{4AC44A15-4D6F-47E3-B59C-15D3B6AF7F21}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,9 +14,9 @@ Global
 		{8C4514BA-3956-4250-BC6F-8435A8E59C3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C4514BA-3956-4250-BC6F-8435A8E59C3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C4514BA-3956-4250-BC6F-8435A8E59C3D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3288AEBE-4842-4DF4-94B8-096FD66D823E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3288AEBE-4842-4DF4-94B8-096FD66D823E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3288AEBE-4842-4DF4-94B8-096FD66D823E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3288AEBE-4842-4DF4-94B8-096FD66D823E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AC44A15-4D6F-47E3-B59C-15D3B6AF7F21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AC44A15-4D6F-47E3-B59C-15D3B6AF7F21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AC44A15-4D6F-47E3-B59C-15D3B6AF7F21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AC44A15-4D6F-47E3-B59C-15D3B6AF7F21}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

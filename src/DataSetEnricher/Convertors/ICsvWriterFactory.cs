@@ -4,5 +4,5 @@ namespace CardanoAssignment.Convertors;
 
 public interface ICsvWriterFactory
 {
-    CsvWriter CreateCsvWriter(StringWriter stringWriter);
+    IWriter CreateCsvWriter(StringWriter stringWriter);
 }

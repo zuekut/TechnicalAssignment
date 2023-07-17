@@ -7,7 +7,7 @@ namespace CardanoAssignment.Convertors;
 
 public class CsvWriterFactory : ICsvWriterFactory
 {
-    public CsvWriter CreateCsvWriter(StringWriter stringWriter)
+    public IWriter CreateCsvWriter(StringWriter stringWriter)
     {
         var csvWriter = new CsvWriter(stringWriter, new CsvConfiguration(CultureInfo.InvariantCulture));
         csvWriter.Context.RegisterClassMap<InputDataSetMap>();
