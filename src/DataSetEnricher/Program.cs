@@ -23,6 +23,7 @@ Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(configuration)
     .CreateLogger();
 builder.Host.UseSerilog();
+builder.Services.AddPolicyRegistries();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddGleiHttpClient(gleiApiConfiguration);
