@@ -15,6 +15,8 @@ ConfigurationManager configuration = builder.Configuration;
     configuration.SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: isDevelopment)
     .AddJsonFile($"appsettings.{environmentName}.json", true, isDevelopment)
+    .AddEnvironmentVariables()
+    .AddEnvironmentVariables(prefix: "ASPNETCORE_")
     .Build();
 var gleiApiConfiguration = configuration.GetSection("GleiApiConfiguration").Get<GleiApiConfiguration>();
 builder.Services.AddControllers();

@@ -1,0 +1,13 @@
+version: '3.9'
+services:
+  datasetenricher:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8060:80
+    environment:
+      - Serilog__MinimumLevel=Debug
+      - GleiApiConfiguration__BaseUrl=https://api.gleif.org/
+      - ASPNETCORE_ENVIRONMENT=Development
+      
