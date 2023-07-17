@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CardanoAssignment.Enrichments;
 using CardanoAssignment.Enrichments.Decorators;
+using CardanoAssignment.Exceptions;
 using CardanoAssignment.Models;
 using CardanoAssignment.Repositories;
 using Moq;
@@ -36,6 +37,35 @@ public class LeiTransactionCostCalculationDecoratorTests
         Check.That(enrichedGbRecord.TransactionCost).IsEqualTo(-378793.0286);
         var enrichedNlRecord = enrichedRecords.ElementAt(1);
         Check.That(enrichedNlRecord.TransactionCost).IsEqualTo(-11964973.979238754);
+    }
+    
+    [Fact]
+    public void GivenValidDecoratedDataButGleifRepoThrows_WhenGetData_ThenExceptionThrown()
+    {
+        //Arrange
+        var leiRecordsMock = CreateLeiRecordsMock();
+        _leiData.Setup(leiData => leiData.GetData()).Returns(leiRecordsMock);
+        _gleifRepository.Setup(gleifrepo => gleifrepo.GetLeiRecordByLeiNumber(It.IsAny<string>())).Throws<GleifApiException>();
+        //Act and Assert
+        Check.ThatCode(() => _leiTransactionCostCalculationDecorator.GetData()).Throws<GleifApiException>();
+    }
+    
+    [Fact]
+    public void GivenDecoratedDataWithoutCountry_WhenGetData_ThenDataEnrichedWithTransactionCostCalculation()
+    {
+        //Arrange
+        var gleifRecordWithoutCountry = new GleifRecord();
+        var leiRecordsMock = CreateLeiRecordsMock(gleifRecordGb: gleifRecordWithoutCountry, gleifRecordNl: gleifRecordWithoutCountry);
+        _leiData.Setup(leiData => leiData.GetData()).Returns(leiRecordsMock);
+        //Act
+        var enrichedRecords =_leiTransactionCostCalculationDecorator.GetData();
+
+        //Assert
+        Check.That(enrichedRecords.Count).IsEqualTo(2);
+        var enrichedGbRecord = enrichedRecords.FirstOrDefault();
+        Check.That(enrichedGbRecord.TransactionCost).IsZero();
+        var enrichedNlRecord = enrichedRecords.ElementAt(1);
+        Check.That(enrichedNlRecord.TransactionCost).IsZero();
     }
     
     private List<LeiRecord> CreateLeiRecordsMock(GleifRecord? gleifRecordGb = null, GleifRecord? gleifRecordNl = null)
