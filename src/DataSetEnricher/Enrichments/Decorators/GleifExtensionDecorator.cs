@@ -1,7 +1,7 @@
 using CardanoAssignment.Models;
 using CardanoAssignment.Repositories;
 
-namespace CardanoAssignment.Enrichments;
+namespace CardanoAssignment.Enrichments.Decorators;
 
 public class GleifExtensionDecorator : LeiDataDecorator
 {
@@ -18,9 +18,14 @@ public class GleifExtensionDecorator : LeiDataDecorator
         foreach (var leiRecord in _decoratedData.GetData())
         {
             var externalLeiRecord = _gleifRepository.GetLeiRecordByLeiNumber(leiRecord.Lei).Result;
-            leiRecord.GleifRecord = externalLeiRecord;
-            leiRecord.LegalName = externalLeiRecord.Data.FirstOrDefault().Attributes.Entity.LegalName.Name;
-            leiRecord.Bic = externalLeiRecord.Data.FirstOrDefault().Attributes.Bic.FirstOrDefault();
+            var externalLeiRecordData = externalLeiRecord?.Data;
+            if (externalLeiRecordData != null)
+            {
+                leiRecord.GleifRecord = externalLeiRecord;
+                leiRecord.LegalName = externalLeiRecordData?.FirstOrDefault()?.Attributes?.Entity?.LegalName?.Name ?? string.Empty;
+                leiRecord.Bic = externalLeiRecordData?.FirstOrDefault()?.Attributes?.Bic?.FirstOrDefault() ?? string.Empty;
+            }
+
             leiRecords.Add(leiRecord);
         }
 

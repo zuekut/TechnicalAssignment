@@ -1,6 +1,6 @@
 using CardanoAssignment.Models;
 
-namespace CardanoAssignment.Enrichments;
+namespace CardanoAssignment.Enrichments.Decorators;
 
 public abstract class LeiDataDecorator : ILeiData
 {
