@@ -22,7 +22,7 @@ public class DataEnrichmentController : Controller
         var csvDataSet = _csvConvertor.ConvertFromCsv(file.OpenReadStream());
         var enrichedCsv = _dataSetEnrichmentProcessor.ProcessDataSet(csvDataSet);
 
-        Response.Headers.Add("Content-Disposition", "attachment; filename=extended.csv");
+        Response.Headers.Add("Content-Disposition", "attachment; filename=enriched-dataset.csv");
         return Content(enrichedCsv, "text/csv");
 
     }
