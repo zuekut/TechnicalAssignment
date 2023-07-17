@@ -1,7 +1,7 @@
 using CardanoAssignment.Models;
 using CardanoAssignment.Repositories;
 
-namespace CardanoAssignment.Enrichments;
+namespace CardanoAssignment.Enrichments.Decorators;
 
 public class LeiTransactionCostCalculationDecorator : LeiDataDecorator
 {

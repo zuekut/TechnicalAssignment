@@ -137,35 +137,6 @@ public class DataSetEnrichmentProcessorTests
             }
         };
 
-        /*
-        var mockGleifRecord = new GleifRecord
-        {
-            Data = new[]
-            {
-                new Data
-                {
-                    Attributes = new Attributes
-                    {
-                        Entity = new Entity
-                        {
-                            LegalName = new LegalName
-                            {
-                                Name = "test"
-                            },
-                            LegalAddress = new LegalAddress
-                            {
-                                Country = "GB"
-                            }
-                        },
-                        Bic = new[]
-                        {
-                            "testbic"
-                        }
-                    }
-                }
-            }
-        };
-        */
         var enrichedLeiRecords = new List<LeiRecord>();
         enrichedLeiRecords.AddRange(csvDataSet);
         enrichedLeiRecords.FirstOrDefault().Bic = "testbic";
