@@ -1,7 +1,10 @@
+using System.Net;
+
 namespace CardanoAssignment.Exceptions;
 
 public class CsvConversionException : Exception
 {
+    public HttpStatusCode StatusCode { get; set; }
     public CsvConversionException(string message, Exception innerException) : base(message, innerException)
     {
 
