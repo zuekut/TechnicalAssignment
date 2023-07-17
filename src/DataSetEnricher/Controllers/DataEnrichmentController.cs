@@ -1,4 +1,5 @@
-﻿using CardanoAssignment.Convertors;
+﻿using System.Text;
+using CardanoAssignment.Convertors;
 using CardanoAssignment.Processors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,14 +17,20 @@ public class DataEnrichmentController : Controller
     }
 
     [HttpPost("enrichData")]
+    [ProducesResponseType(typeof(FileContentResult), 200)]
+    [ProducesResponseType(typeof(ProblemDetails), 400)]
+    [ProducesResponseType(typeof(ProblemDetails), 500)]
     public IActionResult EnrichLeiDataSet(IFormFile file)
     {
         if (file is not { Length: > 0 }) return BadRequest("No file was uploaded.");
         var csvDataSet = _csvConvertor.ConvertFromCsv(file.OpenReadStream());
         var enrichedCsv = _dataSetEnrichmentProcessor.ProcessDataSet(csvDataSet);
+        
+        var fileContentResult = new FileContentResult(Encoding.UTF8.GetBytes(enrichedCsv), "text/csv")
+        {
+            FileDownloadName = "enriched-dataset.csv"
+        };
 
-        Response.Headers.Add("Content-Disposition", "attachment; filename=enriched-dataset.csv");
-        return Content(enrichedCsv, "text/csv");
-
+        return fileContentResult;
     }
 }

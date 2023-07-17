@@ -1,8 +1,6 @@
-﻿using System.Globalization;
+﻿using System.Net;
 using CardanoAssignment.Exceptions;
 using CardanoAssignment.Models;
-using CsvHelper;
-using CsvHelper.Configuration;
 
 namespace CardanoAssignment.Convertors;
 
@@ -33,7 +31,10 @@ public class CsvConvertor : ICsvConvertor
         }
         catch (Exception exception)
         {
-            throw new CsvConversionException($"An error occured converting from input CSV to Lei records with the following message: {exception.Message}", exception.InnerException);
+            throw new CsvConversionException($"An error occured converting from input CSV to Lei records with the following message: {exception.Message}", exception.InnerException)
+            {
+                StatusCode = HttpStatusCode.BadRequest
+            };
         }
     }
 
@@ -50,7 +51,10 @@ public class CsvConvertor : ICsvConvertor
         catch (Exception exception)
         {
             _logger.LogDebug("Attempt of converting {@LeiRecords} to CSV failed.", leiRecords);
-            throw new CsvConversionException($"An error occured converting {leiRecords.Count} leiRecords to CSV with the following message: {exception.Message}", exception.InnerException);
+            throw new CsvConversionException($"An error occured converting {leiRecords.Count} leiRecords to CSV with the following message: {exception.Message}", exception.InnerException)
+            {
+                StatusCode = HttpStatusCode.InternalServerError
+            };
         }
     }
 }
