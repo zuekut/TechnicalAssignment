@@ -33,8 +33,7 @@ public class CsvConvertor : ICsvConvertor
         }
         catch (Exception exception)
         {
-            Console.WriteLine(exception);
-            throw;
+            throw new CsvConversionException($"An error occured converting from input CSV to Lei records with the following message: {exception.Message}", exception.InnerException);
         }
     }
 
