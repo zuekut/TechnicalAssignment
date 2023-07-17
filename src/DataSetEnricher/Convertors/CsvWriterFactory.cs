@@ -11,7 +11,6 @@ public class CsvWriterFactory : ICsvWriterFactory
     {
         var csvWriter = new CsvWriter(stringWriter, new CsvConfiguration(CultureInfo.InvariantCulture));
         csvWriter.Context.RegisterClassMap<InputDataSetMap>();
-        csvWriter.WriteHeader<LeiRecord>();
         return csvWriter;
     }
 }
