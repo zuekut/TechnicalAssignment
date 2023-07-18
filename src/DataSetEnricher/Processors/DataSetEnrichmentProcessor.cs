@@ -32,7 +32,6 @@ public class DataSetEnrichmentProcessor : IDataSetEnrichmentProcessor
         catch (CsvConversionException csvConversionException)
         {
             _logger.LogError(csvConversionException, csvConversionException.Message);
-            //ToDo Handle api response of the error
             throw;
         }
         catch (Exception exception)

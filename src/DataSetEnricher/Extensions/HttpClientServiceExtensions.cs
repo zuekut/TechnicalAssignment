@@ -6,6 +6,7 @@ public static class HttpClientServiceExtensions
 {
     public static void AddGleiHttpClient(this IServiceCollection serviceCollection, GleiApiConfiguration gleiApiConfiguration)
     {
+        if (gleiApiConfiguration == null) throw new ArgumentNullException(nameof(gleiApiConfiguration));
         serviceCollection.AddHttpClient("Glei", httpClient => { httpClient.BaseAddress = new Uri(gleiApiConfiguration.BaseUrl); })
             .ConfigurePrimaryHttpMessageHandler(() =>
             {
