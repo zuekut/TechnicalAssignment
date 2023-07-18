@@ -10,7 +10,8 @@ public static class HttpClientServiceExtensions
             .ConfigurePrimaryHttpMessageHandler(() =>
             {
                 var handler = new HttpClientHandler();
-                // Added since there was an issue with executing requests in docker-compose file. To fix it, the most likely solution would be to create a self-signed certificate for the docker container and run the container via https
+                //ToDo Figure out how to trust the root certificate inside the Docker image
+                //Added a workaround (Only for Development) until I figure out how to fix it since there was an issue with executing requests in Docker container, does not happen locally. There is an issue with the client SSL certificate towards api.gleif.org, resulting in Untrusted root.
                 if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
                 {
                     handler.ServerCertificateCustomValidationCallback = (_, _, _, _) => true;
